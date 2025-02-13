@@ -1,0 +1,93 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+
+
+#
+# Complete the 'transformSentence' function below.
+#
+# The function is expected to return a STRING.
+# The function accepts STRING sentence as parameter.
+#
+
+def transformSentence(sentence):
+
+    if not 1 <= len(sentence) <= 100:
+        raise ValueError("Sentence length must be between 1 and 100 characters.")
+
+    if not sentence[0].isalpha() or not sentence[-1].isalpha():
+        raise ValueError("Sentence must start and end with a letter.")
+
+    if "  " in sentence:  # Check for consecutive spaces
+        raise ValueError("Sentence cannot contain consecutive spaces.")
+
+    transformed_sentence = ""
+    for word in sentence.split():
+        if not all(char.isalpha() for char in word):  # Check if all chars in word are alphabetic
+            raise ValueError("Words must contain only alphabetic characters")
+
+        transformed_word = ""
+        for i, char in enumerate(word):
+            if i == 0:
+                transformed_word += char  # First character unchanged
+            else:
+                prev_char = word[i - 1]
+
+                if char.lower() > prev_char.lower():  # Case-insensitive comparison
+                    transformed_word += char.upper()
+                elif char.lower() < prev_char.lower():  # Case-insensitive comparison
+                    transformed_word += char.lower()
+                else:  # Correctly handle equal characters (case-insensitive)
+                    transformed_word += char  # Or transformed_word += char.lower() if you always want lowercase when equal
+
+        transformed_sentence += transformed_word + " "
+
+    return transformed_sentence.strip()
+
+
+# Test cases (including the crucial one)
+test_cases = [
+    "coOL dog",  # Correct: "coOl dog"
+    "abc XYZ",   # Correct: "abc XyZ"
+    "hello WORLD", # Correct: "hello WoRLD"
+    "a B c",     # Correct: "a b c"
+    "zZa Bb",   # Correct: "zZa Bb"
+    "   leading spaces", # ValueError
+    "trailing spaces   ", # ValueError
+    "con  secutive",  # ValueError
+    "123 invalid", # ValueError
+    "verylongwordthatiswaytoolongtobevalid", # ValueError
+    "", # ValueError
+    "XXx",  # Correct: "XXx"
+    "yyY",  # Correct: "yyY"
+    "Mm",   # Correct: "Mm" 
+    "AaA",  # Correct: "AaA"
+    "mZzM" # Correct: "mZzM"
+]
+
+for test_case in test_cases:
+    try:
+        result = transformSentence(test_case)
+        print(f"Input: '{test_case}'")
+        print(f"Output: '{result}'")
+    except ValueError as e:
+        print(f"Input: '{test_case}'")
+        print(f"Error: {e}")
+    print("-" * 20)
+if __name__ == '__main__':
+
+
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    sentence = input()
+
+    result = transformSentence(sentence)
+
+    fptr.write(result + '\n')
+
+    fptr.close()
