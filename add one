@@ -1,0 +1,47 @@
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+vector<int> plusOne(vector<int>& digits) {
+    int n = digits.size();
+    
+    for (int i = n - 1; i >= 0; i--) {
+        if (digits[i] < 9) {
+            digits[i]++;  // Increment and return if no carry needed
+            return digits;
+        }
+        digits[i] = 0;  // Set to 0 and continue loop
+    }
+    
+    // If all digits were 9, we need an extra leading 1
+    digits.insert(digits.begin(), 1);
+    return digits;
+}
+
+int main() {
+    vector<int> digits1 = {1, 2, 3};
+    vector<int> digits2 = {4, 3, 2, 1};
+    vector<int> digits3 = {9};
+    vector<int> digits4 = {9, 9, 9};
+
+    vector<int> result1 = plusOne(digits1);
+    vector<int> result2 = plusOne(digits2);
+    vector<int> result3 = plusOne(digits3);
+    vector<int> result4 = plusOne(digits4);
+
+    // Print results
+    for (int num : result1) cout << num << " ";
+    cout << endl;
+
+    for (int num : result2) cout << num << " ";
+    cout << endl;
+
+    for (int num : result3) cout << num << " ";
+    cout << endl;
+
+    for (int num : result4) cout << num << " ";
+    cout << endl;
+
+    return 0;
+}
