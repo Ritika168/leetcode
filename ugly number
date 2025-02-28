@@ -1,0 +1,13 @@
+class Solution {
+public:
+    bool isUgly(int n) {
+    if (n <= 0) return false; // Ugly numbers must be positive
+    
+    // Keep dividing n by 2, 3, and 5 while it is divisible
+    while (n % 2 == 0) n /= 2;
+    while (n % 3 == 0) n /= 3;
+    while (n % 5 == 0) n /= 5;
+    
+    // If after removing all 2, 3, and 5 factors, we get 1, then it is ugly
+    return n == 1;}
+};
