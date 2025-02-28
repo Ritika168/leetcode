@@ -1,0 +1,9 @@
+class Solution {
+public:
+    int sumOfTheDigitsOfHarshadNumber(int x) {
+       int y= 1 + (x- 1) % 9;
+      if (x%y==0) return y;
+      else return -1;
+       } 
+    
+};
