@@ -1,23 +1,12 @@
-class Solution {
-public:
-    int numberOfAlternatingGroups(vector<int>& colors, int k) {
-        int n = colors.size();
-        int count = 0, l = 0;
-
-        while (l < n) {
-            int r = l + 1;
-
-            // Expand the window while alternating colors
-            while (r < l + n && colors[(r - 1) % n] != colors[r % n]) 
-                r++;
-
-            // Count valid windows of size at least k
-            if (r - l >= k) 
-                count += (r - l) - k + 1;
-
-            l = r;  // Move to the next starting point
-        }
-
-        return count;
-    }
-};
+class Solution:
+    def numberOfAlternatingGroups(self, colors: List[int], k: int) -> int:
+       res, curr_group,n=0,1,len(colors)
+       for i in range(n+k-2):
+         if colors[i%n]!=colors[(i+1)%n]:
+            curr_group+=1
+         else:
+          curr_group=1
+         if curr_group>=k:
+            res+=1
+       return res
+        
