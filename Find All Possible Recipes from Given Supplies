@@ -1,0 +1,48 @@
+class Solution {
+public:
+    vector<string> findAllRecipes(vector<string>& recipes, vector<vector<string>>& ingredients, vector<string>& supplies) {
+        unordered_map<string, vector<string>> adj;
+        unordered_map<string, int> indegree;
+        unordered_set<string> supply(supplies.begin(), supplies.end());
+
+        // Initialize indegree for all recipes
+        for (const string& recipe : recipes) {
+            indegree[recipe] = 0;
+        }
+
+        // Build adjacency list and indegree map
+        for (int i = 0; i < recipes.size(); ++i) {
+            string recipe = recipes[i];
+            for (const string& ingredient : ingredients[i]) {
+                if (supply.count(ingredient) == 0) {
+                    adj[ingredient].push_back(recipe);
+                    indegree[recipe]++;
+                }
+            }
+        }
+
+        // Topological sort using BFS (Kahn's Algorithm)
+        queue<string> q;
+        for (const auto& [recipe, indeg] : indegree) {
+            if (indeg == 0) {
+                q.push(recipe);
+            }
+        }
+
+        vector<string> res;
+        while (!q.empty()) {
+            string curr_recipe = q.front();
+            q.pop();
+            res.push_back(curr_recipe);
+
+            for (const string& next_recipe : adj[curr_recipe]) {
+                indegree[next_recipe]--;
+                if (indegree[next_recipe] == 0) {
+                    q.push(next_recipe);
+                }
+            }
+        }
+
+        return res;
+    }
+};
