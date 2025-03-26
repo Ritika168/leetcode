@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int minOperations(vector<vector<int>>& grid, int x) {
+        vector<int> array;
+        int remainder = grid[0][0] % x;
+        
+        for(int i = 0; i < grid.size(); ++i) {
+            for(int j = 0; j < grid[0].size(); ++j) {
+                if(grid[i][j] % x != remainder) {
+                    return -1; // Uniform grid is not possible
+                }
+                array.push_back(grid[i][j]);
+            }
+        }
+        
+        sort(array.begin(), array.end());
+        int n = array.size();
+        int median = array[n/2]; // For odd length, this is the median
+        
+        int steps = 0;
+        for(int num : array) {
+            steps += abs(num - median) / x;
+        }
+        
+        return steps;
+    }
+};
