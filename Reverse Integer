@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int reverse(int x) {
+     long rev=0;
+     while(x!=0){
+     long d=x%10;
+     rev=rev*10+d;
+     if (rev > numeric_limits<int>::max() || rev <numeric_limits<int>::min()) {  /*numeric_limits<T> is a part of the <limits> header in C++ and is not a container like vector. It is used to query the characteristics of a data type, such as:
+Minimum and Maximum values (min(), max()) Whether a type is signed or unsigned (is_signed) Precision for floating-point types (epsilon()) Smallest positive number for floating-point types (denorm_min())*/
+            return 0;} 
+     x=x/10;
+    }
+     return rev;
+    }
+};
