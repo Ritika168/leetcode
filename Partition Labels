@@ -1,0 +1,25 @@
+class Solution {
+public:
+    vector<int> partitionLabels(string s) {
+        vector<int> partition;
+        int lastIndex[26] = {0};  // Store the last occurrence of each character
+        
+        // Step 1: Fill lastIndex array with last positions of characters
+        for (int i = 0; i < s.length(); i++) {
+            lastIndex[s[i] - 'a'] = i;
+        }
+
+        // Step 2: Traverse the string and create partitions
+        int start_index = 0, end_index = 0;
+        for (int i = 0; i < s.length(); i++) {
+            end_index = max(end_index, lastIndex[s[i] - 'a']); // Expand partition
+            
+            if (i == end_index) { // When we reach the end of the partition
+                partition.push_back(end_index - start_index + 1);
+                start_index = i + 1;
+            }
+        }
+
+        return partition;
+    }
+};
