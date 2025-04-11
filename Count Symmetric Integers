@@ -1,0 +1,22 @@
+class Solution {
+public:
+    int countSymmetricIntegers(int low, int high) {
+    int result=0;
+    for(int i=low;i<=high;i++){
+        string nums=to_string(i);
+        int n=nums.length();
+        if(n%2)
+        continue;
+        int firstSum=0,lastSum=0;
+        for(int j=0;j<n/2;j++){
+            firstSum+=nums[j];
+            lastSum+=nums[n-j-1];
+            
+        }
+        if(firstSum==lastSum)
+        result++;
+
+    }   
+    return result; 
+    }
+};
