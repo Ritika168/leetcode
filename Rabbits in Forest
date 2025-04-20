@@ -1,0 +1,25 @@
+class Solution {
+public:
+    int numRabbits(vector<int>& answers) {
+     unordered_map<int, int> map;
+        
+        for (int i = 0; i < answers.size(); i++) {
+            if (map.find(answers[i]) != map.end()) {
+                map[answers[i]] = map[answers[i]] + 1;
+            } else {
+                map[answers[i]] = 1;
+            }
+        }
+
+        int ans = 0;
+        for (auto& pair : map) {
+            int key = pair.first;
+            int count = pair.second;
+            int groupSize = key + 1;
+            int groups = ceil((count * 1.0) / groupSize);
+            ans += groups * groupSize;
+        }
+
+        return ans;
+    }
+};
