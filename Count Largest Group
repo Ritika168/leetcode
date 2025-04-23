@@ -1,0 +1,36 @@
+#include <iostream>
+#include <unordered_map>
+#include <algorithm>
+
+using namespace std;
+
+int countLargestGroup(int n) {
+    unordered_map<int, int> groupCounts;
+
+    for (int i = 1; i <= n; ++i) {
+        int num = i, sum = 0;
+        while (num > 0) {
+            sum += num % 10;
+            num /= 10;
+        }
+        groupCounts[sum]++;
+    }
+
+    int maxSize = 0, result = 0;
+    for (const auto& pair : groupCounts) {
+        if (pair.second > maxSize) {
+            maxSize = pair.second;
+            result = 1;
+        } else if (pair.second == maxSize) {
+            result++;
+        }
+    }
+
+    return result;
+}
+
+int main() {
+    cout << countLargestGroup(13) << endl; // Output: 4
+    cout << countLargestGroup(2) << endl;  // Output: 2
+    return 0;
+}
