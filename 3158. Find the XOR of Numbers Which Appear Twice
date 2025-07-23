@@ -1,10 +1,16 @@
 class Solution {
 public:
     int duplicateNumbersXOR(vector<int>& nums) {
-         int n = 0;  
-        for(int num : nums) {  
-            n = n ^ num;
-        } 
-        return n;
+        unordered_map<int,int> freq;
+        for(int num:nums){
+            freq[num]++;
+        }
+        int result=0;
+        for(auto [num,count]:freq){
+            if(count==2){
+                result^=num;
+            }
+        }
+        return result;
     }
 };
