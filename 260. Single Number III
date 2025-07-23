@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<int> singleNumber(vector<int>& nums) {
+        int xorVal = 0;
+
+        // Step 1: XOR all elements
+        for (int num : nums) {
+            xorVal ^= num;
+        }
+
+        // Step 2: Safely isolate rightmost set bit using unsigned math
+        unsigned int ux = static_cast<unsigned int>(xorVal);
+        unsigned int diffBit = ux & (~ux + 1);
+
+        // Step 3: Separate the two unique numbers
+        int a = 0, b = 0;
+        for (int num : nums) {
+            if (static_cast<unsigned int>(num) & diffBit)
+                a ^= num;
+            else
+                b ^= num;
+        }
+
+        return {a, b};
+    }
+};
