@@ -1,0 +1,30 @@
+TC= O(n)
+sc = O(n)
+
+
+class Solution {
+public:
+    int mostFrequentEven(vector<int>& nums) {
+       unordered_map<int,int>mpp;
+        for(int num: nums){
+        if(num % 2 == 0){
+         mpp[num]++;   
+        }
+      }
+      if(mpp.empty())
+      return -1;
+
+      int ans=-1,maxcount=0;
+      for(auto it:mpp){
+        if(it.second > maxcount){
+        maxcount = it.second;
+        ans = it.first;
+      }  
+      else if(it.second == maxcount && it.first < ans){
+        ans=it.first;
+       }
+      }
+      return ans;
+     }
+    
+};
