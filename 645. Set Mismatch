@@ -19,3 +19,30 @@ public:
        return{repeating,missing};
     }
 };
+
+
+class Solution {
+public:
+    vector<int> findErrorNums(vector<int>& nums) {
+        long long n = nums.size();
+
+        long long sumN = n * (n + 1LL) / 2;                  // expected sum of 1..n
+        long long sumN2 = n * (n + 1LL) * (2LL * n + 1) / 6; // expected sum of squares of 1..n
+
+        long long s = 0, s2 = 0;
+        for (int x : nums) {
+            s += x;
+            s2 += 1LL * x * x;
+        }
+
+        long long val1 = s - sumN;   // X - Y
+        long long val2 = s2 - sumN2; // X² - Y² = (X - Y)(X + Y)
+
+        long long sumXY = val2 / val1; // X + Y
+
+        long long X = (val1 + sumXY) / 2;
+        long long Y = X - val1;
+
+        return {(int)X, (int)Y};
+    }
+};
