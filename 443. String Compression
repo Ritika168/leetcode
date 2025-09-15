@@ -1,0 +1,30 @@
+class Solution {
+public:
+    int compress(vector<char>& chars) {
+        int n = chars.size();
+        int idx = 0;
+        
+        for (int i = 0; i < n;) {
+            char ch = chars[i];
+            int count = 0;
+
+            // count frequency
+            while (i < n && chars[i] == ch) {
+                count++;
+                i++;
+            }
+
+            // write char
+            chars[idx++] = ch;
+
+            // write count if > 1
+            if (count > 1) {
+                string str = to_string(count);
+                for (char dig : str) {
+                    chars[idx++] = dig;
+                }
+            }
+        }
+        return idx;
+    }
+};
